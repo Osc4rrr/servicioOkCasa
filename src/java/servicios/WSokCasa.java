@@ -19,7 +19,10 @@ import javax.jws.WebResult;
 @WebService(serviceName = "WSokCasa")
 public class WSokCasa {
     
-    /* SOY UN COMENTARIO */
+    /* SOY UN COMENTARIO 
+    * SOY OTRO COMENTARIO
+    * otro comentario mas
+    */
     @WebMethod(operationName= "mostrarPersonas")
     @WebResult(name="Persona")
     public List<Persona> get_todoProducto(){
