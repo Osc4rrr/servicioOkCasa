@@ -20,8 +20,6 @@ import javax.jws.WebResult;
 public class WSokCasa {
     
     /* SOY UN COMENTARIO */
-    
-    
     @WebMethod(operationName= "mostrarPersonas")
     @WebResult(name="Persona")
     public List<Persona> get_todoProducto(){
@@ -30,8 +28,6 @@ public class WSokCasa {
         List<Persona> lista = persDao.fun_mostrarPersonas(); 
         return lista; 
     }
-    
-    /* SOY UN COMENTARIO Oscar */
     
 
 
