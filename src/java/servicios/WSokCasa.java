@@ -69,7 +69,7 @@ public class WSokCasa {
     }
     
     @WebMethod(operationName= "mostrarPromocion")
-    @WebResult(name="Promo")
+    @WebResult(name="Promocion")
     public List<Promocion> obtenerPromocion(){
         
         PromocionDao proDao = new PromocionDao(); 
@@ -89,9 +89,23 @@ public class WSokCasa {
         
         PromocionDao p = new PromocionDao();
         
-        p.agregarPromocion(id_promocion, descripcion);
+        p.fun_agregarPromocion(id_promocion, descripcion);
         
         return true; 
+    }
+    
+    @WebMethod(operationName="actualizarPromocion")
+    @WebResult (name="Promocion")
+    public boolean actualizarPromocion(
+            @WebParam(name="idpromocion") int id_promocion, 
+            @WebParam(name="descripcion") String descripcion)
+    {
+        
+        PromocionDao promDao = new PromocionDao();
+        
+        boolean resultado = promDao.fun_actualizarPromocion(id_promocion, descripcion);
+        
+        return resultado; 
     }
     
     

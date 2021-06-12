@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -24,6 +26,7 @@ public class PromocionDao {
         conn = new Conexion(); 
     }
     
+    //Funcion para visualizar las promociones
     public List<Promocion> fun_mostrarPromocion(){
         
         Connection acceso = conn.getCnn(); 
@@ -52,9 +55,8 @@ public class PromocionDao {
         return lista; 
     }
     
-    
-    
-    public boolean agregarPromocion(int id, String descripcion){
+    //Funcion para agregar Promociones
+    public boolean fun_agregarPromocion(int id, String descripcion){
         Connection acceso = conn.getCnn(); 
         boolean fueAgregado = false; 
         
@@ -79,4 +81,30 @@ public class PromocionDao {
         
         return fueAgregado; 
     }
+    
+    //Funcion para actualizar las promociones
+    public boolean fun_actualizarPromocion(int id, String descripcion){
+        Connection acceso = conn.getCnn(); 
+        boolean Actualizado = false; 
+        try {
+            CallableStatement cs = acceso.prepareCall("{ call PROMOCION_PKG.ins(?, ?) }");
+            cs.setInt(1, id);
+            cs.setString(2, descripcion);
+            
+            if(!cs.execute())
+            {
+                    Actualizado = true; 
+            }else{
+                    Actualizado = false;
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(PromocionDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return Actualizado;
+    }
+    
+    
+    
 }
