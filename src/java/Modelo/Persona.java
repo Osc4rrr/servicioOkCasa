@@ -6,6 +6,8 @@
 package Modelo;
 
 import java.util.Date;
+import javax.xml.datatype.XMLGregorianCalendar;
+
 
 /**
  *

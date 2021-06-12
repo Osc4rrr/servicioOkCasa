@@ -7,10 +7,16 @@ package Modelo;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -61,31 +67,50 @@ public class PersonaDao {
     }
     
     
-    public boolean agregarPersona(Persona persona){
+    public boolean agregarPersona(Persona persona) throws ParseException{
         Connection acceso = conn.getCnn(); 
         boolean fueAgregado = true; 
         
+        
+         //SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+         //Date fecha = DateFor.parse("10/10/2010"); 
+         //java.sql.Date sqlDate = new java.sql.Date();
+         
+         //java.util.Date dateUtil=new java.util.Date("22/08/2020"); 
+         //java.sql.Date dateSql= new java.sql.Date(dateUtil.getDay(),dateUtil.getMonth(),dateUtil.getYear());
+         
+         
+         java.sql.Date planilla = (java.sql.Date)persona.getFecha_nac();
+         
+        
         try {
+            //System.out.println("Fecha aca " + dateSql);
+            
+            
+
+            
+            //Date fecha_na = Date.valueOf(persona.getFecha_nac()); 
+            
+            //System.out.println("Fecha parseada " + fecha_na);
+            
             CallableStatement cs = acceso.prepareCall("{ call PERSONA_PKG.ins(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }");
-            cs.setInt(1, persona.getId_persona());
-            cs.setString(2, persona.getRut());
-            cs.setString(3, persona.getNombre()); 
+            cs.setString(1, persona.getRut());
+            cs.setString(2, persona.getDireccion()); 
+            cs.setInt(3, persona.getId_persona());
             cs.setString(4, persona.getApellido());
-            cs.setDate(5, (Date) persona.getFecha_nac());
-            cs.setString(6, persona.getDireccion());
-            cs.setString(7, persona.getCorreo()); 
-            cs.setInt(8,persona.getNro_celular());
-            cs.setString(9, persona.getTipo_persona());
+            cs.setString(5, persona.getCorreo());
+            cs.setInt(6, persona.getNro_celular()); 
+            cs.setDate(7, new java.sql.Date(persona.getFecha_nac().getTime()) );
+            cs.setString(8, persona.getTipo_persona());
+            cs.setString(9, persona.getNombre());
             cs.setString(10, persona.getContrasenia());
-            
-            
-            
+
             fueAgregado = !cs.execute();
             
             
-        } catch (Exception e) {
+        } catch (SQLException e) {
             
-            System.out.println(e.getMessage());
+            System.out.println("Error aca: " + e.getMessage());
         }
         
         
