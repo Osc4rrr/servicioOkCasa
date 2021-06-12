@@ -12,7 +12,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import oracle.jdbc.OracleTypes;
-import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -64,15 +63,16 @@ public class PersonaDao {
     
     public boolean agregarPersona(Persona persona){
         Connection acceso = conn.getCnn(); 
+        
         boolean fueAgregado = false; 
-        DateTimeFormatter f = DateTimeFormatter.BASIC_ISO_DATE;
         try {
             CallableStatement cs = acceso.prepareCall("{ call PERSONA_PKG.ins(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }");
+                     
             cs.setInt(1, persona.getId_persona());
             cs.setString(2, persona.getRut());
             cs.setString(3, persona.getNombre()); 
             cs.setString(4, persona.getApellido());
-            cs.setDate(5, (Date) (persona.getFecha_nac()));
+            cs.setDate(5, (Date) persona.getFecha_nac());
             cs.setString(6, persona.getDireccion());
             cs.setString(7, persona.getCorreo()); 
             cs.setInt(8,persona.getNro_celular());
@@ -96,7 +96,4 @@ public class PersonaDao {
         
     }
 
-    private Date SimpleDateFormat(java.util.Date fecha_nac) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
