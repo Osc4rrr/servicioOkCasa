@@ -61,9 +61,13 @@ public class WSokCasa {
         p.setTipo_persona(tipo_persona);
         p.setContrasenia(contrasenia_persona);
         
+        System.out.println(p);
+        
+        PersonaDao persDao = new PersonaDao(); 
+        
+        return persDao.agregarPersona(p);
         
         
-        return true; 
     }
     
     

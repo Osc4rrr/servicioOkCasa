@@ -63,7 +63,7 @@ public class PersonaDao {
     
     public boolean agregarPersona(Persona persona){
         Connection acceso = conn.getCnn(); 
-        boolean fueAgregado = false; 
+        boolean fueAgregado = true; 
         
         try {
             CallableStatement cs = acceso.prepareCall("{ call PERSONA_PKG.ins(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }");
@@ -79,15 +79,13 @@ public class PersonaDao {
             cs.setString(10, persona.getContrasenia());
             
             
-            if(!cs.execute())
-            {
-                fueAgregado = true; 
-            }else{
-                fueAgregado = false;
-            }
+            
+            fueAgregado = !cs.execute();
             
             
         } catch (Exception e) {
+            
+            System.out.println(e.getMessage());
         }
         
         
