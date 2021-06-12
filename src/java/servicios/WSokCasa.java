@@ -7,6 +7,7 @@ package servicios;
 import Modelo.Persona;
 import Modelo.PersonaDao;
 import Modelo.Promocion;
+import Modelo.PromocionDao;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -67,6 +68,16 @@ public class WSokCasa {
         return true; 
     }
     
+    @WebMethod(operationName= "mostrarPromocion")
+    @WebResult(name="Promo")
+    public List<Promocion> obtenerPromocion(){
+        
+        PromocionDao proDao = new PromocionDao(); 
+        
+        List<Promocion> lista = proDao.fun_mostrarPromocion(); 
+        
+        return lista; 
+    }
     
     @WebMethod(operationName="insertarPromocion")
     @WebResult (name="Promocion")
@@ -76,13 +87,13 @@ public class WSokCasa {
 
     ){
         
-        Promocion p = new Promocion();
+        PromocionDao p = new PromocionDao();
         
-        p.setId_promocion(id_promocion);
-        p.setDescripcion(descripcion);
+        p.agregarPromocion(id_promocion, descripcion);
         
         return true; 
     }
+    
     
     
     /* SOY UN COMENTARIO 
