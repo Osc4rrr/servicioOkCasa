@@ -6,6 +6,7 @@
 package servicios;
 import Modelo.Persona;
 import Modelo.PersonaDao;
+import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
@@ -30,6 +31,39 @@ public class WSokCasa {
         PersonaDao persDao = new PersonaDao(); 
         List<Persona> lista = persDao.fun_mostrarPersonas(); 
         return lista; 
+    }
+    
+    @WebMethod(operationName="insertarPersona")
+    @WebResult (name="Persona")
+    public boolean ingresarPersona(
+            @WebParam(name="idPersona") int id_persona, 
+            @WebParam(name="rutPersona") String rut_persona, 
+            @WebParam(name="nombrePersona") String nombre_persona,
+            @WebParam(name="apellidoPersona") String apellido_persona,
+            @WebParam(name="fechaNacPersona") Date fecha_nac_persona,
+            @WebParam(name="direccionPersona") String direccion_persona, 
+            @WebParam(name="correoPersona") String correo_persona,
+            @WebParam(name="nroCelularPersona") int nro_celular_persona, 
+            @WebParam(name="tipoPersona") String tipo_persona,
+            @WebParam(name="contraseniaPersona") String contrasenia_persona 
+    ){
+        
+        Persona p = new Persona(); 
+        
+        p.setId_persona(id_persona);
+        p.setRut(rut_persona);
+        p.setNombre(nombre_persona);
+        p.setApellido(apellido_persona);
+        p.setFecha_nac(fecha_nac_persona);
+        p.setDireccion(direccion_persona);
+        p.setCorreo(correo_persona);
+        p.setNro_celular(nro_celular_persona);
+        p.setTipo_persona(tipo_persona);
+        p.setContrasenia(contrasenia_persona);
+        
+        
+        
+        return true; 
     }
     
     

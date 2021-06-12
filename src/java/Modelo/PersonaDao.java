@@ -7,6 +7,7 @@ package Modelo;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,5 +58,40 @@ public class PersonaDao {
         }
         
         return lista; 
+    }
+    
+    
+    public boolean agregarPersona(Persona persona){
+        Connection acceso = conn.getCnn(); 
+        boolean fueAgregado = false; 
+        
+        try {
+            CallableStatement cs = acceso.prepareCall("{ call PERSONA_PKG.ins(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) }");
+            cs.setInt(1, persona.getId_persona());
+            cs.setString(2, persona.getRut());
+            cs.setString(3, persona.getNombre()); 
+            cs.setString(4, persona.getApellido());
+            cs.setDate(5, (Date) persona.getFecha_nac());
+            cs.setString(6, persona.getDireccion());
+            cs.setString(7, persona.getCorreo()); 
+            cs.setInt(8,persona.getNro_celular());
+            cs.setString(9, persona.getTipo_persona());
+            cs.setString(10, persona.getContrasenia());
+            
+            
+            if(!cs.execute())
+            {
+                fueAgregado = true; 
+            }else{
+                fueAgregado = false;
+            }
+            
+            
+        } catch (Exception e) {
+        }
+        
+        
+        return fueAgregado; 
+        
     }
 }
