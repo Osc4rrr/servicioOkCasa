@@ -6,6 +6,7 @@
 package servicios;
 import Modelo.Persona;
 import Modelo.PersonaDao;
+import Modelo.Promocion;
 import java.util.Date;
 import java.util.List;
 import javax.jws.WebService;
@@ -66,6 +67,22 @@ public class WSokCasa {
         return true; 
     }
     
+    
+    @WebMethod(operationName="insertarPromocion")
+    @WebResult (name="Promocion")
+    public boolean ingresarPromocion(
+            @WebParam(name="idpromocion") int id_promocion, 
+            @WebParam(name="descripcion") String descripcion
+
+    ){
+        
+        Promocion p = new Promocion();
+        
+        p.setId_promocion(id_promocion);
+        p.setDescripcion(descripcion);
+        
+        return true; 
+    }
     
     
     /* SOY UN COMENTARIO 
