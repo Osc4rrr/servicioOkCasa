@@ -100,7 +100,7 @@ public class PersonaDao {
             cs.setString(4, persona.getApellido());
             cs.setString(5, persona.getCorreo());
             cs.setInt(6, persona.getNro_celular()); 
-            cs.setDate(7, new java.sql.Date(persona.getFecha_nac().getTime()) );
+            cs.setDate(7, new java.sql.Date(persona.getFecha_nac().getTime()));
             cs.setString(8, persona.getTipo_persona());
             cs.setString(9, persona.getNombre());
             cs.setString(10, persona.getContrasenia());
@@ -116,5 +116,23 @@ public class PersonaDao {
         
         return fueAgregado; 
         
+    }
+    
+    public boolean eliminarPersona(int codigo_persona){
+        Connection acceso = conn.getCnn(); 
+        boolean fueEliminado =false; 
+        
+        try {
+            CallableStatement cs = acceso.prepareCall("{call PERSONA_PKG.del(?)}");
+            cs.setInt(1, codigo_persona);
+            
+            fueEliminado = !cs.execute(); 
+        } catch (SQLException e) {
+            System.out.println("Error aca: " + e.getMessage());
+
+        }
+        
+        return fueEliminado; 
+    
     }
 }

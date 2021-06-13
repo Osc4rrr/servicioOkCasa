@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package servicios;
+import Modelo.DetalleServicio;
 import Modelo.Persona;
 import Modelo.PersonaDao;
+import Modelo.Servicio;
+import Modelo.ServicioDao;
 import Modelo.TipoPaquete;
 import Modelo.TipoPaqueteDao;
 import java.text.DateFormat;
@@ -52,6 +55,85 @@ public class WSokCasa {
         return lista; 
     }
     
+    //Listar Servicios
+    @WebMethod(operationName = "mostrarServicios")
+    @WebResult(name="Servicio")
+    public List<Servicio> get_todoServicio(){
+        ServicioDao sDao = new ServicioDao(); 
+        List<Servicio> lista = sDao.fun_mostrarServicios(); 
+        
+        return lista; 
+    
+    }
+    
+    //Agregar Servicio
+    @WebMethod(operationName = "agregarServicio")
+    @WebResult(name="servicio")
+    public boolean ingresarServicio(
+            @WebParam(name="id_servicio") int id_servicio, 
+            @WebParam(name="nombre_servicio") String nombre_servicio, 
+            @WebParam(name="descripcion") String descripcion, 
+            @WebParam(name="tipo_paquete_id") int tipo_paquete_id, 
+            @WebParam(name="servicio_id") int servicio_id
+    ){
+    
+        Servicio s = new Servicio();
+        TipoPaquete tp = new TipoPaquete(); 
+        DetalleServicio ds = new DetalleServicio(); 
+        
+        tp.setId_tipo_paquete(tipo_paquete_id);
+        ds.setId_detalle_servicio(id_servicio);
+        
+        s.setId_servicio(id_servicio);
+        s.setNombre(nombre_servicio);
+        s.setDescripcion(descripcion);
+        s.setTipoPaquete(tp);
+        s.setDetalleServicio(ds);
+        
+        ServicioDao sDao = new ServicioDao();
+        
+        return sDao.agregarServicio(s); 
+               
+    }
+    
+    //modificar Servicio
+    @WebMethod(operationName = "modificarServicio")
+    @WebResult(name="servicio")
+    public boolean modificarServicio(
+            @WebParam(name="id_servicio") int id_servicio, 
+            @WebParam(name="servicio_id") int servicio_id,
+            @WebParam(name="nombre_servicio") String nombre_servicio, 
+            @WebParam(name="descripcion") String descripcion, 
+            @WebParam(name="tipo_paquete_id") int tipo_paquete_id
+            
+    ){
+    
+        Servicio s = new Servicio();
+        
+        s.setId_servicio(id_servicio);
+        s.setNombre(nombre_servicio);
+        s.setDescripcion(descripcion);
+        s.setTipo_paquete_id_tipo_paquete(tipo_paquete_id);
+        s.setServicio_id(servicio_id);
+        
+        ServicioDao sDao = new ServicioDao();
+        
+        return sDao.modificarServicio(s); 
+               
+    }
+    
+    //Eliminar Servicio 
+    @WebMethod(operationName = "eliminarServicio")
+    @WebResult(name="servicio")
+    public boolean eliminarServicio(
+            @WebParam(name="id_servicio") int id_servicio,
+            @WebParam(name="servicio_id") int servicio_id){
+    
+        ServicioDao sDao = new ServicioDao(); 
+        
+        return sDao.eliminarServicio(id_servicio, servicio_id); 
+    
+    }
     
     //Agregar Tipo Paquete
     @WebMethod(operationName= "agregarTipoPaquete")
@@ -107,6 +189,16 @@ public class WSokCasa {
        
     }
     
+    //Eliminar persona
+    @WebMethod(operationName = "eliminarPersona")
+    @WebResult(name="Persona")
+    public boolean eliminarPersona(@WebParam(name="id_codigo_persona") int id_persona){
+        PersonaDao pDao = new PersonaDao(); 
+        return pDao.eliminarPersona(id_persona); 
+       
+    }
+    
+    
     
     @WebMethod(operationName="insertarPersona")
     @WebResult (name="Persona")
@@ -123,16 +215,20 @@ public class WSokCasa {
             @WebParam(name="contraseniaPersona") String contrasenia_persona 
     ) throws ParseException{
         
-        Persona p = new Persona(); 
-        String sDate1="31/12/1998";  
-        Date date1=new SimpleDateFormat("d/M/yyyy").parse(sDate1);  
+        Persona p = new Persona();
+        
+        
+        String string = fecha_nac_persona;
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = format.parse(string);
+       
         
         
         p.setId_persona(id_persona);
         p.setRut(rut_persona);
         p.setNombre(nombre_persona);
         p.setApellido(apellido_persona);
-        p.setFecha_nac( date1);
+        p.setFecha_nac(date);
         p.setDireccion(direccion_persona);
         p.setCorreo(correo_persona);
         p.setNro_celular(nro_celular_persona);
